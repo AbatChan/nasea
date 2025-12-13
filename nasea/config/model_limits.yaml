@@ -1,0 +1,128 @@
+# Model Token Limits Configuration
+# This file defines context windows and max output tokens for supported models.
+# Edit this file to adjust limits for your specific API provider.
+#
+# Sources:
+# - DeepSeek: https://api-docs.deepseek.com/quick_start/pricing
+# - OpenAI: https://platform.openai.com/docs/models
+# - Kimi K2: https://github.com/MoonshotAI/Kimi-K2
+# - Llama: https://huggingface.co/meta-llama
+# - Venice AI: https://docs.venice.ai
+
+# Default limits (used when model not found)
+defaults:
+  context_window: 4096
+  max_output_tokens: 4096
+
+models:
+  # DeepSeek Models
+  deepseek-chat:
+    context_window: 64000
+    max_output_tokens: 8192
+  deepseek-v3:
+    context_window: 64000
+    max_output_tokens: 8192
+  deepseek-reasoner:
+    context_window: 64000
+    max_output_tokens: 8192
+  deepseek-r1:
+    context_window: 64000
+    max_output_tokens: 8192
+  deepseek-coder:
+    context_window: 128000
+    max_output_tokens: 8192
+
+  # OpenAI Models
+  gpt-4o:
+    context_window: 128000
+    max_output_tokens: 16384
+  gpt-4o-mini:
+    context_window: 128000
+    max_output_tokens: 16384
+  gpt-4-turbo:
+    context_window: 128000
+    max_output_tokens: 4096
+  gpt-4:
+    context_window: 32000
+    max_output_tokens: 8192
+  gpt-4.1:
+    context_window: 1000000
+    max_output_tokens: 32768
+  gpt-3.5-turbo:
+    context_window: 16000
+    max_output_tokens: 4096
+  o1:
+    context_window: 200000
+    max_output_tokens: 100000
+  o1-pro:
+    context_window: 200000
+    max_output_tokens: 100000
+  gpt-5:
+    context_window: 200000
+    max_output_tokens: 128000
+
+  # Kimi / Moonshot Models
+  kimi-k2:
+    context_window: 128000
+    max_output_tokens: 8192
+  moonshot:
+    context_window: 128000
+    max_output_tokens: 8192
+
+  # Llama Models (via Venice or other providers)
+  llama-3.3-70b:
+    context_window: 128000
+    max_output_tokens: 8192
+  llama-3.2-3b:
+    context_window: 128000
+    max_output_tokens: 4096
+  llama-3.1-70b:
+    context_window: 128000
+    max_output_tokens: 8192
+  llama-3.1-405b:
+    context_window: 128000
+    max_output_tokens: 8192
+
+  # Qwen Models (via Venice)
+  qwen3-235b:
+    context_window: 131072
+    max_output_tokens: 8192
+  qwen3-coder-480b:
+    context_window: 256000
+    max_output_tokens: 8192
+  qwen3-coder:
+    context_window: 256000
+    max_output_tokens: 8192
+  qwen3-4b:
+    context_window: 32768
+    max_output_tokens: 4096
+
+  # Mistral Models
+  mistral-31-24b:
+    context_window: 131072
+    max_output_tokens: 8192
+
+  # Venice AI Categories (generic limits)
+  venice-uncensored:
+    context_window: 32768
+    max_output_tokens: 8192
+  venice-small:
+    context_window: 32768
+    max_output_tokens: 4096
+  venice-medium:
+    context_window: 131072
+    max_output_tokens: 8192
+
+  # Claude Models (if using via compatible API)
+  claude-3-opus:
+    context_window: 200000
+    max_output_tokens: 4096
+  claude-3-sonnet:
+    context_window: 200000
+    max_output_tokens: 4096
+  claude-3-haiku:
+    context_window: 200000
+    max_output_tokens: 4096
+  claude-3.5-sonnet:
+    context_window: 200000
+    max_output_tokens: 8192

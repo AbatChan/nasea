@@ -1,0 +1,33 @@
+# API Keys - NEVER commit
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs & cache
+*.log
+.cache/
+.pytest_cache/
+
+# Output
+output/

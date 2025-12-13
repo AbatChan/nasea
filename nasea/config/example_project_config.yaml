@@ -1,0 +1,58 @@
+# Example Project-Level Configuration
+#
+# Copy this file to your project root as one of:
+#   - .nasea/config.yaml (recommended)
+#   - .nasea.yaml
+#   - nasea.yaml
+#
+# These settings override the defaults in nasea/config/*.yaml
+
+# Model-specific prompt fixes
+model_fixes:
+  models:
+    # Add a custom model
+    my-custom-model:
+      json_mode_supported: true
+      needs_explicit_format: true
+      system_suffix: "\n\nRespond concisely."
+      replace_phrases:
+        "You MUST": "Please"
+
+    # Override an existing model's settings
+    gpt-3.5-turbo:
+      max_tokens_multiplier: 0.7  # Be even more concise
+
+# Confidence-based filtering settings
+confidence:
+  thresholds:
+    # Be more lenient - show issues with confidence >= 60
+    default_min: 60
+
+    # Or be stricter - only show high-confidence issues
+    # default_min: 80
+
+  # Override specific pylint codes
+  pylint:
+    # Treat unused imports as lower confidence in this project
+    W0611: 20  # Was 35
+
+    # Treat broad exceptions as higher confidence (we care about this)
+    W0703: 70  # Was 50
+
+  # Adjust test failure settings
+  test_failures:
+    confidence: 90  # Slightly lower than default 95
+    severity: high
+
+  # Adjust security scan sensitivity
+  bandit:
+    severity_to_confidence:
+      HIGH: 95      # More strict
+      MEDIUM: 80    # More strict
+      LOW: 50       # Same
+
+# Future: Additional project settings
+# generation:
+#   max_file_size: 5000
+#   default_language: python
+#   framework: fastapi

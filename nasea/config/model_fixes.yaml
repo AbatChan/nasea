@@ -1,0 +1,203 @@
+# Model-Specific Prompt Fixes Configuration
+#
+# Different LLM models have quirks and respond differently to certain prompt patterns.
+# This config allows customizing prompt adjustments per model.
+#
+# You can override these in your project's .nasea/config.yaml:
+#   model_fixes:
+#     models:
+#       my-custom-model:
+#         needs_explicit_format: true
+
+# Default settings applied to unknown models
+defaults:
+  json_mode_supported: true
+  needs_explicit_format: false
+  max_tokens_multiplier: 1.0
+  temperature_offset: 0.0
+  system_prefix: ""
+  system_suffix: ""
+  remove_phrases: []
+  replace_phrases: {}
+
+# Model-specific configurations
+models:
+  # ============================================================================
+  # OpenAI Models
+  # ============================================================================
+  gpt-4:
+    json_mode_supported: true
+    needs_explicit_format: false
+
+  gpt-4-turbo:
+    json_mode_supported: true
+    needs_explicit_format: false
+
+  gpt-4o:
+    json_mode_supported: true
+    needs_explicit_format: false
+
+  gpt-4o-mini:
+    json_mode_supported: true
+    needs_explicit_format: false
+    max_tokens_multiplier: 0.9
+
+  gpt-3.5-turbo:
+    # GPT-3.5 needs clearer instructions
+    needs_explicit_format: true
+    system_suffix: "\n\nIMPORTANT: Follow the output format exactly. Return ONLY the requested format."
+    max_tokens_multiplier: 0.8
+
+  # ============================================================================
+  # Anthropic Claude Models
+  # ============================================================================
+  claude-3-opus:
+    json_mode_supported: true
+    needs_explicit_format: false
+
+  claude-3-sonnet:
+    json_mode_supported: true
+    needs_explicit_format: false
+
+  claude-3-haiku:
+    # Haiku needs more explicit instructions
+    needs_explicit_format: true
+    system_suffix: "\n\nBe concise. Follow format exactly."
+
+  claude-3.5-sonnet:
+    json_mode_supported: true
+    needs_explicit_format: false
+
+  # ============================================================================
+  # Qwen Models (Venice AI / Alibaba)
+  # ============================================================================
+  qwen3-235b:
+    # Qwen sometimes ignores emphatic instructions
+    needs_explicit_format: true
+    system_suffix: "\n\nFormat your response exactly as requested."
+    replace_phrases:
+      "CRITICAL:": "Important:"
+      "You MUST": "Please"
+      "You should NEVER": "Avoid"
+      "NEVER": "Do not"
+      "ALWAYS": "Please"
+
+  qwen-2.5-coder:
+    json_mode_supported: true
+    replace_phrases:
+      "CRITICAL:": "Note:"
+      "You MUST": "Please ensure you"
+
+  qwen-2.5-72b:
+    json_mode_supported: true
+    needs_explicit_format: true
+
+  # ============================================================================
+  # Llama Models (Meta / Venice AI)
+  # ============================================================================
+  llama-3.3-70b:
+    # Llama responds well but can be verbose
+    system_suffix: "\n\nBe concise and direct."
+    max_tokens_multiplier: 0.9
+
+  llama-3.1-405b:
+    json_mode_supported: true
+
+  llama-3.1-70b:
+    json_mode_supported: true
+
+  llama-3.2-90b:
+    json_mode_supported: true
+    max_tokens_multiplier: 0.95
+
+  # ============================================================================
+  # Mistral Models
+  # ============================================================================
+  mistral-large:
+    json_mode_supported: true
+
+  mistral-medium:
+    json_mode_supported: true
+
+  mistral-nemo:
+    needs_explicit_format: true
+    system_suffix: "\n\nOutput ONLY the requested format, no explanations."
+
+  mixtral-8x7b:
+    needs_explicit_format: true
+    max_tokens_multiplier: 0.9
+
+  # ============================================================================
+  # Kimi / Moonshot Models
+  # ============================================================================
+  kimi-k2:
+    json_mode_supported: true
+    replace_phrases:
+      "CRITICAL:": "Note:"
+      "You MUST": "Please"
+
+  moonshot-v1-128k:
+    json_mode_supported: true
+
+  moonshot-v1-32k:
+    json_mode_supported: true
+
+  # ============================================================================
+  # DeepSeek Models
+  # ============================================================================
+  deepseek-chat:
+    needs_explicit_format: true
+    system_suffix: "\n\nFollow the output format precisely."
+
+  deepseek-coder:
+    json_mode_supported: true
+    # DeepSeek Coder is good at code generation
+
+  deepseek-coder-v2:
+    json_mode_supported: true
+
+  # ============================================================================
+  # Dolphin Models (Venice AI - uncensored)
+  # ============================================================================
+  dolphin-2.9.3-mistral-7b:
+    needs_explicit_format: true
+    system_suffix: "\n\nProvide only the requested output."
+    max_tokens_multiplier: 0.8
+
+  dolphin-llama3:
+    needs_explicit_format: true
+    max_tokens_multiplier: 0.85
+
+  # ============================================================================
+  # Google Models
+  # ============================================================================
+  gemini-pro:
+    json_mode_supported: true
+    needs_explicit_format: false
+
+  gemini-1.5-pro:
+    json_mode_supported: true
+
+  gemini-1.5-flash:
+    json_mode_supported: true
+    max_tokens_multiplier: 0.9
+
+  # ============================================================================
+  # Cohere Models
+  # ============================================================================
+  command-r:
+    json_mode_supported: true
+
+  command-r-plus:
+    json_mode_supported: true
+
+  # ============================================================================
+  # Other Models
+  # ============================================================================
+  yi-large:
+    json_mode_supported: true
+    needs_explicit_format: true
+
+  phi-3-medium:
+    needs_explicit_format: true
+    max_tokens_multiplier: 0.85

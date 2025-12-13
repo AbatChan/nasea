@@ -1,0 +1,25 @@
+# Core Dependencies - Python 3.10+
+
+# LLM API
+openai>=1.0.0
+
+# CLI and UI
+typer>=0.9.0
+rich>=13.7.0
+prompt-toolkit>=3.0.39
+
+# Config
+python-dotenv>=1.0.0
+pyyaml>=6.0
+
+# Logging
+loguru>=0.7.2
+
+# Token counting
+tiktoken>=0.5.0
+
+# Web search
+duckduckgo-search>=4.0.0
+
+# Interactive prompts
+questionary>=2.0.0

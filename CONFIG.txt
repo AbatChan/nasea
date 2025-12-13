@@ -1,0 +1,42 @@
+===========================================
+       NASEA Configuration Guide
+===========================================
+
+STEP 1: Create .env file
+------------------------
+Rename this file from "CONFIG.txt" to ".env"
+(remove CONFIG and .txt, just name it .env)
+
+OR copy-paste the lines below into a new file called ".env"
+
+
+STEP 2: Add your API key
+------------------------
+Replace "your_key_here" with your actual API key.
+You only need ONE of these (whichever service you use):
+
+VENICE_API_KEY=your_key_here
+OPENAI_API_KEY=your_key_here
+KIMI_API_KEY=your_key_here
+
+
+STEP 3: Save and run
+--------------------
+Save the .env file in the nasea folder (same folder as this file)
+Then run: nasea generate "your prompt here"
+
+
+===========================================
+       Getting API Keys
+===========================================
+
+Venice (Recommended - uncensored):
+  https://venice.ai → Settings → API Keys
+
+OpenAI:
+  https://platform.openai.com/api-keys
+
+Kimi:
+  https://platform.moonshot.cn/
+
+===========================================

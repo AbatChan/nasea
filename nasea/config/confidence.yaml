@@ -1,0 +1,294 @@
+# Confidence-Based Filtering Configuration
+#
+# Controls how the verifier filters issues based on confidence levels.
+# Higher confidence = more certain the issue is real.
+#
+# You can override these in your project's .nasea/config.yaml:
+#   confidence:
+#     thresholds:
+#       default_min: 60  # More lenient
+
+# Confidence thresholds
+thresholds:
+  # Issues >= this are always reported
+  high: 80
+
+  # Default minimum confidence to report issues
+  # Issues below this are filtered out
+  default_min: 70
+
+  # Issues below this are considered "noise"
+  noise: 40
+
+# Severity mapping based on confidence
+severity_levels:
+  critical: 90   # confidence >= 90
+  high: 70       # confidence >= 70
+  medium: 50     # confidence >= 50
+  low: 0         # confidence < 50
+
+# Pylint error code confidence mappings
+# Format: CODE: confidence_level (0-100)
+#
+# Categories:
+#   F (Fatal): 95-100 - Code won't run at all
+#   E (Error): 70-95  - Definite bugs
+#   W (Warning): 40-65 - Potential issues
+#   C (Convention): 20-35 - Style issues
+#   R (Refactor): 25-40 - Refactoring suggestions
+
+pylint:
+  # Fatal errors (F) - 95-100
+  F0001: 100  # File not found
+  F0002: 100  # Syntax error in AST
+
+  # Syntax/Import errors (E00xx) - 90-100
+  E0001: 100  # Syntax error
+  E0100: 90   # __init__ returns something
+  E0101: 90   # Return in __init__
+  E0102: 95   # Function redefined
+  E0103: 90   # Break/continue not in loop
+  E0104: 90   # Return outside function
+  E0105: 90   # Yield outside function
+  E0107: 85   # Nonexistent operator
+  E0108: 85   # Duplicate argument
+
+  # Class errors (E01xx) - 75-85
+  E0110: 80   # Abstract class instantiated
+  E0111: 80   # Reversed call
+  E0112: 75   # Method not callable
+  E0113: 75   # Non-string item
+  E0114: 75   # Non-string key
+  E0115: 80   # Non-local without binding
+  E0116: 80   # Continue in finally
+  E0117: 85   # Nonlocal and global
+  E0118: 80   # Named expr outside scope
+  E0119: 75   # Return with argument
+
+  # Method errors (E02xx) - 85
+  E0211: 85   # Missing self argument
+  E0213: 85   # Method should have self
+
+  # Import errors (E04xx) - 85-90
+  E0401: 90   # Import error
+  E0402: 85   # Relative import beyond top-level
+
+  # Variable errors (E06xx) - 85-90
+  E0601: 90   # Used before assignment
+  E0602: 90   # Undefined variable
+  E0603: 85   # Undefined __all__
+  E0604: 85   # Invalid __all__ object
+  E0611: 85   # No name in module
+
+  # Exception errors (E07xx) - 75-85
+  E0701: 80   # Bad except order
+  E0702: 85   # Raising bad type
+  E0703: 80   # Bad exception context
+  E0704: 85   # Misplaced bare raise
+  E0710: 80   # Raising non-exception
+  E0711: 85   # NotImplemented raised
+  E0712: 75   # Catching non-exception
+
+  # Call errors (E1xxx) - 70-85
+  E1003: 70   # Bad first argument to super
+  E1101: 75   # No member (can be false positive)
+  E1102: 80   # Not callable
+  E1111: 75   # Assignment from no return
+  E1120: 85   # No value for argument
+  E1121: 85   # Too many positional
+  E1123: 80   # Unexpected keyword
+  E1124: 80   # Redundant keyword
+  E1125: 80   # Missing kwonly argument
+  E1126: 75   # Invalid sequence index
+  E1127: 75   # Invalid slice index
+  E1128: 75   # Assignment from None
+  E1129: 75   # Not context manager
+  E1130: 70   # Invalid unary operand
+  E1131: 70   # Not iterable
+  E1132: 75   # Repeated keyword
+  E1133: 70   # Not mapping
+  E1134: 70   # Not iterable (mapping)
+  E1135: 70   # Unsupported membership
+  E1136: 70   # Unsubscriptable
+  E1137: 70   # Unsupported assignment
+  E1138: 70   # Unsupported delete
+  E1139: 70   # Invalid metaclass
+  E1140: 70   # Unhashable member
+  E1141: 70   # Dict iter delete
+  E1142: 75   # Await outside async
+
+  # Logging errors (E12xx) - 75
+  E1200: 75   # Logging unsupported format
+  E1201: 75   # Logging bad format
+  E1205: 75   # Logging too many args
+  E1206: 75   # Logging too few args
+
+  # String format errors (E13xx) - 70-75
+  E1300: 75   # Bad format character
+  E1301: 75   # Truncated format
+  E1302: 75   # Mixed format string
+  E1303: 75   # Format missing argument
+  E1304: 75   # Missing format key
+  E1305: 75   # Too many format args
+  E1306: 75   # Too few format args
+  E1307: 70   # Bad string format type
+  E1310: 70   # Bad str strip call
+
+  # Other errors
+  E1507: 70   # Invalid envvar value
+  E1519: 70   # Singledispatch method
+  E1700: 80   # Yield inside async
+
+  # ========================================
+  # Warnings (W) - 30-65
+  # ========================================
+
+  # Statement warnings (W01xx) - 30-65
+  W0101: 60   # Unreachable code
+  W0102: 55   # Dangerous default value
+  W0104: 40   # Pointless statement
+  W0105: 35   # Pointless string statement (docstrings)
+  W0106: 45   # Expression not assigned
+  W0107: 30   # Unnecessary pass
+  W0108: 40   # Lambda may not be necessary
+  W0109: 50   # Duplicate key
+  W0120: 45   # Else clause on loop
+  W0122: 65   # Use of exec
+  W0123: 65   # Use of eval
+  W0124: 50   # Self cls assignment
+  W0125: 40   # Using constant test
+  W0126: 50   # Invalid condition
+  W0127: 50   # Self assigning variable
+  W0128: 50   # Redeclared in handler
+  W0129: 40   # Assert on string
+  W0131: 45   # Named expression in except
+  W0199: 60   # Assert on tuple
+
+  # Class warnings (W02xx) - 40-60
+  W0211: 50   # Bad staticmethod argument
+  W0212: 45   # Protected access
+  W0221: 55   # Arguments differ
+  W0222: 55   # Signature differs
+  W0223: 60   # Abstract method not overridden
+  W0231: 55   # Init not called
+  W0232: 50   # No init
+  W0233: 55   # Init from bad parent
+  W0235: 40   # Useless super delegation
+  W0236: 50   # Invalid overridden method
+  W0237: 50   # Non parent init called
+  W0238: 45   # Unused private member
+
+  # Format warnings (W03xx) - 25-30
+  W0301: 30   # Unnecessary semicolon
+  W0311: 25   # Bad indentation (style)
+
+  # Import warnings (W04xx) - 40-60
+  W0401: 50   # Wildcard import
+  W0402: 40   # Deprecated module
+  W0404: 50   # Reimported
+  W0406: 55   # Module import itself
+  W0410: 60   # Future import wrong position
+
+  # Misc warnings (W05xx) - 20
+  W0511: 20   # Fixme/todo (informational)
+
+  # Variable warnings (W06xx) - 35-60
+  W0601: 60   # Global variable undefined
+  W0602: 45   # Global variable not assigned
+  W0603: 50   # Using global statement
+  W0604: 50   # Using global at module level
+  W0611: 35   # Unused import
+  W0612: 40   # Unused variable
+  W0613: 35   # Unused argument
+  W0614: 45   # Unused wildcard import
+  W0621: 50   # Redefined outer name
+  W0622: 50   # Redefined builtin
+  W0631: 55   # Undefined loop variable
+  W0632: 60   # Unbalanced tuple unpacking
+  W0640: 55   # Cell variable in loop
+  W0641: 45   # Possibly unused variable
+  W0642: 50   # Self cls variable
+
+  # Exception warnings (W07xx) - 45-55
+  W0702: 55   # Bare except
+  W0703: 50   # Broad except
+  W0705: 55   # Duplicate except
+  W0706: 50   # Try except raise
+  W0707: 55   # Raise missing from
+  W0711: 50   # Except with identity
+  W0715: 50   # String exception
+  W0716: 55   # Wrong exception operation
+  W0718: 45   # Broad exception caught
+  W0719: 45   # Broad exception raised
+
+  # Argument warnings (W11xx) - 45-50
+  W1113: 50   # Keyword arg before vararg
+  W1114: 45   # Arguments out of order
+  W1115: 50   # Non string format
+  W1116: 50   # Not number
+  W1117: 50   # Bad keyword argument
+
+  # Logging warnings (W12xx) - 40
+  W1201: 40   # Logging not lazy
+  W1202: 40   # Logging format interpolation
+  W1203: 40   # Logging fstring interpolation
+
+  # String format warnings (W13xx) - 40-50
+  W1300: 45   # Bad format string key
+  W1301: 50   # Unused format key
+  W1302: 50   # Bad format string
+  W1303: 50   # Missing format argument key
+  W1304: 50   # Unused format arg
+  W1305: 40   # Format combined specs
+  W1308: 40   # Duplicate string formatting
+  W1309: 45   # f-string without interpolation
+  W1310: 45   # Format string without args
+
+  # String warnings (W14xx) - 45-55
+  W1401: 55   # Anomalous backslash
+  W1402: 55   # Anomalous unicode
+  W1404: 45   # Implicit str concat in seq
+  W1405: 45   # Using encoding for text
+
+  # Stdlib warnings (W15xx) - 40-60
+  W1501: 45   # Bad open mode
+  W1502: 50   # Unspecified encoding
+  W1503: 40   # Redundant unittest assert
+  W1506: 50   # Bad thread instantiation
+  W1507: 50   # Shallow copy environ
+  W1508: 50   # Invalid envvar default
+  W1509: 60   # Subprocess popen preexec_fn
+  W1510: 55   # Subprocess run check
+  W1514: 45   # Unspecified encoding
+  W1515: 40   # Forgotten debug statement
+  W1518: 50   # Method cache max size none
+
+  # ========================================
+  # Defaults for categories
+  # ========================================
+  # If a specific code isn't listed, use these defaults
+
+default_by_category:
+  F: 100  # Fatal - always critical
+  E: 75   # Error - likely bug
+  W: 45   # Warning - potential issue
+  C: 30   # Convention - style
+  R: 35   # Refactor - suggestion
+
+# Bandit security scan confidence mapping
+bandit:
+  severity_to_confidence:
+    HIGH: 90
+    MEDIUM: 75
+    LOW: 55
+
+  # Adjust based on bandit's own confidence
+  confidence_adjustment:
+    HIGH: 5      # Add to base
+    MEDIUM: 0    # No change
+    LOW: -15     # Subtract from base
+
+# Test failure confidence
+test_failures:
+  confidence: 95
+  severity: high
