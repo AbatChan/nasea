@@ -990,10 +990,17 @@ class ToolExecutor:
                     "message": f"Found {len(results)} results for '{query}'"
                 }
             except Exception as e:
-                ddg_status = f"search_error: {e}"
-                return {"success": False, "error": f"DuckDuckGo search failed: {str(e)}"}
+                error_str = str(e).lower()
+                if "rate" in error_str or "limit" in error_str:
+                    return {"success": False, "error": "Search rate limit reached. Please wait a moment and try again."}
+                elif "timeout" in error_str:
+                    return {"success": False, "error": "Search timed out. Check your internet connection."}
+                elif "connection" in error_str or "network" in error_str:
+                    return {"success": False, "error": "No internet connection. Please check your network."}
+                else:
+                    return {"success": False, "error": f"Search failed. Try again or check internet connection."}
 
-        return {"success": False, "error": "No search provider available. Set TAVILY_API_KEY or install duckduckgo-search."}
+        return {"success": False, "error": "Web search not available. Run: pip install duckduckgo-search"}
 
     def _open_browser(self, args: Dict[str, Any]) -> Dict[str, Any]:
         """Open a file or URL in browser and capture console output."""
