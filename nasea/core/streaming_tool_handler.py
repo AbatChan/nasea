@@ -1414,6 +1414,20 @@ class StreamingToolHandler:
                 else:
                     self.console.print(f"  [green]⎿[/green] No syntax errors in {filename}")
 
+            elif tool_name == "web_search":
+                # Display web search results - IMPORTANT: show actual content for AI to use
+                message = result.get("message", "")
+                output = result.get("output", "")
+                self.console.print(f"  [green]⎿[/green] {message}")
+                if output:
+                    # Show first few results for user visibility
+                    lines = output.strip().split("\n")[:15]
+                    for line in lines:
+                        if line.strip():
+                            self.console.print(f"      [dim]{line[:100]}[/dim]")
+                    if len(output.strip().split("\n")) > 15:
+                        self.console.print(f"      [dim]... (more results available)[/dim]")
+
             else:
                 # Fallback
                 message = result.get("message", "Success")
@@ -2313,7 +2327,7 @@ class ToolUseConversation:
                     "message": result.get("message", ""),
                     "error": result.get("error")
                 }
-                for key in ("content", "files", "line_count", "count"):
+                for key in ("content", "files", "line_count", "count", "output", "results"):
                     if key in result:
                         payload[key] = result[key]
                 messages.append({
