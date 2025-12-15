@@ -1415,18 +1415,39 @@ class StreamingToolHandler:
                     self.console.print(f"  [green]⎿[/green] No syntax errors in {filename}")
 
             elif tool_name == "web_search":
-                # Display web search results - IMPORTANT: show actual content for AI to use
-                message = result.get("message", "")
+                # Display web search results in clean format for user
+                # AI still gets full content via payload (output/results fields)
                 output = result.get("output", "")
-                self.console.print(f"  [green]⎿[/green] {message}")
                 if output:
-                    # Show first few results for user visibility
-                    lines = output.strip().split("\n")[:15]
-                    for line in lines:
-                        if line.strip():
-                            self.console.print(f"      [dim]{line[:100]}[/dim]")
-                    if len(output.strip().split("\n")) > 15:
-                        self.console.print(f"      [dim]... (more results available)[/dim]")
+                    # Parse results and show clean numbered list
+                    lines = output.strip().split("\n")
+                    results_shown = 0
+                    i = 0
+                    self.console.print(f"  [green]⎿[/green] [dim]Search results:[/dim]")
+                    while i < len(lines) and results_shown < 5:
+                        line = lines[i].strip()
+                        if line.startswith("Title:"):
+                            title = line[6:].strip()[:60]
+                            # Get URL from next line
+                            url = ""
+                            if i + 1 < len(lines) and lines[i + 1].strip().startswith("URL:"):
+                                full_url = lines[i + 1].strip()[4:].strip()
+                                # Extract domain
+                                try:
+                                    from urllib.parse import urlparse
+                                    domain = urlparse(full_url).netloc.replace("www.", "")
+                                except:
+                                    domain = full_url[:30]
+                                url = domain
+                            results_shown += 1
+                            if url:
+                                self.console.print(f"      [dim]{results_shown}.[/dim] {title} [dim]— {url}[/dim]")
+                            else:
+                                self.console.print(f"      [dim]{results_shown}.[/dim] {title}")
+                        i += 1
+                else:
+                    message = result.get("message", "No results")
+                    self.console.print(f"  [yellow]⎿[/yellow] {message}")
 
             else:
                 # Fallback
