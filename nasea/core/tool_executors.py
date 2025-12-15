@@ -966,21 +966,27 @@ class ToolExecutor:
         except ImportError as ie:
             tavily_status = f"import_error: {ie}"
 
-        # Fallback to DuckDuckGo
+        # Fallback to DuckDuckGo (use ddgs, the newer package name)
         DDG = None
         try:
-            from duckduckgo_search import DDGS as DDG
-            ddg_status = "imported"
+            import warnings
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                try:
+                    from ddgs import DDGS as DDG
+                    ddg_status = "imported_ddgs"
+                except ImportError:
+                    from duckduckgo_search import DDGS as DDG
+                    ddg_status = "imported_legacy"
         except ImportError:
-            try:
-                from ddgs import DDGS as DDG
-                ddg_status = "imported_ddgs"
-            except ImportError:
-                ddg_status = "not_available"
+            ddg_status = "not_available"
 
         if DDG:
             try:
-                results = DDG().text(query, max_results=5)
+                import warnings
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore")
+                    results = DDG().text(query, max_results=5)
                 formatted = ""
                 for r in results:
                     formatted += f"Title: {r['title']}\nURL: {r['href']}\nContent: {r['body']}\n\n"
