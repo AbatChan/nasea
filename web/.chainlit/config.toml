@@ -1,0 +1,26 @@
+[project]
+name = "NASEA Web"
+enable_telemetry = false
+
+[UI]
+name = "NASEA"
+description = "AI Coding Assistant"
+default_theme = "dark"
+github = "https://github.com/AbatChan/nasea"
+
+[UI.theme]
+primary_color = "#06b6d4"
+secondary_color = "#8b5cf6"
+background_color = "#0f172a"
+paper_color = "#1e293b"
+font_family = "Inter, sans-serif"
+
+[features]
+multi_modal = false
+latex = false
+
+[features.speech_to_text]
+enabled = false
+
+[features.text_to_speech]
+enabled = false

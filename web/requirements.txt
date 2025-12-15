@@ -1,0 +1,5 @@
+# NASEA Web Requirements
+chainlit>=1.0.0
+
+# Include main nasea requirements
+-r ../requirements.txt
